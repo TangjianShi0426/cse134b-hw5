@@ -1,0 +1,14 @@
+
+{
+  "name": "cse134b-hw5-ssg",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CSE 134B HW5 Eleventy static site generator exercise",
+  "scripts": {
+    "build": "eleventy --config=eleventy.config.cjs",
+    "start": "eleventy --serve --config=eleventy.config.cjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}

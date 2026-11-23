@@ -87,11 +87,100 @@
                 <a href="contact.html">Contact Me</a>
             </p>
         </section>
+
+<section class="random-facts-section">
+  <h2>Interactive Random Facts</h2>
+  <p>Explore interesting facts using the buttons below.</p>
+
+  <random-facts id="facts-widget" fact-index="0"></random-facts>
+
+  
+<div class="facts-controls">
+  <button type="button" id="previous-fact">Previous Fact</button>
+  <button type="button" id="next-fact">Next Fact</button>
+  <button type="button" id="live-fact">Get Live Fact</button>
+</div>
+
+<div class="facts-preferences">
+  <button type="button" id="compact-toggle">
+    Enable Compact Mode
+  </button>
+</div>
+
+</section>
+
     </main>
 
     <footer>
         <p>&copy; 2026 Computer Science Portfolio.</p>
         <p>Created for CSE 134B at UC San Diego.</p>
     </footer>
+
+<script src="random-facts.js" defer></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const widget = document.querySelector("#facts-widget");
+    const previousButton = document.querySelector("#previous-fact");
+    const nextButton = document.querySelector("#next-fact");
+    const liveButton = document.querySelector("#live-fact");
+
+const compactButton = document.querySelector("#compact-toggle");
+
+const storageKey = "hw5-compact-mode";
+
+let compactMode = false;
+
+try {
+  compactMode = localStorage.getItem(storageKey) === "true";
+} catch (error) {
+  console.warn("LocalStorage unavailable:", error);
+}
+
+function updateCompactMode() {
+  widget.toggleAttribute("compact", compactMode);
+
+  compactButton.textContent = compactMode
+    ? "Disable Compact Mode"
+    : "Enable Compact Mode";
+
+  compactButton.setAttribute(
+    "aria-pressed",
+    String(compactMode)
+  );
+}
+
+updateCompactMode();
+
+compactButton.addEventListener("click", () => {
+  compactMode = !compactMode;
+  updateCompactMode();
+
+  try {
+    localStorage.setItem(storageKey, String(compactMode));
+  } catch (error) {
+    console.warn("Could not save preference:", error);
+  }
+});
+
+
+liveButton.addEventListener("click", () => {
+  widget.loadLiveFact();
+});
+
+    previousButton.addEventListener("click", () => {
+      const current = Number(widget.getAttribute("fact-index"));
+      const next = (current - 1 + 5) % 5;
+      widget.setAttribute("fact-index", next);
+    });
+
+    nextButton.addEventListener("click", () => {
+      const current = Number(widget.getAttribute("fact-index"));
+      const next = (current + 1) % 5;
+      widget.setAttribute("fact-index", next);
+    });
+  });
+</script>
+
 </body>
 </html>

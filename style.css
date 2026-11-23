@@ -517,3 +517,130 @@ main a {
         animation-duration: 0.01ms !important;
     }
 }
+
+
+/* HW5 - Random Facts Web Component */
+
+.random-facts-section {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #888;
+  border-radius: 12px;
+  text-align: center;
+}
+
+
+
+/* HW5 - Theme-aware Random Facts component */
+
+random-facts {
+  display: block;
+
+  --fact-background: #293548;
+  --fact-text: #ffffff;
+}
+
+random-facts .facts-panel {
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  background-color: var(--fact-background, #293548);
+  color: var(--fact-text, #ffffff);
+}
+
+random-facts .facts-panel h2,
+random-facts .facts-panel p {
+  color: var(--fact-text, #ffffff);
+}
+
+
+.fact-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+.fact-status {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.facts-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.facts-controls button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+
+.facts-controls button:hover {
+  opacity: 0.8;
+}
+
+.facts-controls button:focus-visible {
+  outline: 3px solid #528cff;
+  outline-offset: 3px;
+}
+
+
+/* HW5 - Component preferences */
+
+.facts-panel.compact {
+  padding: 8px 15px;
+  margin: 8px 0;
+}
+
+.facts-panel.compact .fact-text {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.facts-panel.compact .fact-status {
+  font-size: 0.8rem;
+}
+
+.facts-preferences {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.facts-preferences button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.facts-preferences button:focus-visible {
+  outline: 3px solid #528cff;
+  outline-offset: 3px;
+}
+
+
+/* Default dark theme */
+body random-facts {
+  --fact-background: #293548;
+  --fact-text: #ffffff;
+}
+
+/* Light theme: supports common HW4 theme class/attribute patterns */
+body.light-mode random-facts,
+body.light random-facts,
+html[data-theme="light"] random-facts,
+body[data-theme="light"] random-facts {
+  --fact-background: #f1f5f9;
+  --fact-text: #172033;
+}
+
+/* Compact mode overrides regular panel spacing */
+random-facts .facts-panel.compact {
+  padding: 8px 15px;
+  margin: 8px 0;
+}

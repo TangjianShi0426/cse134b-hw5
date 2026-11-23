@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - Computer Science Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5fb;
+      color: #172033;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    header, footer {
+      background: #18243e;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 12px;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+    }
+
+    section {
+      padding: 15px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    a {
+      color: #155eaa;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Computer Science Student Portfolio</h1>
+    <p>Welcome to my personal website!</p>
+
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>About Me</h2>
+      <p>
+        Hello! I am a Computer Science student at
+        UC San Diego. I am interested in software
+        development, web technologies, and programming.
+      </p>
+      <p>
+        I enjoy learning new technologies and building
+        projects that solve real-world problems.
+      </p>
+    </section>
+
+    <section>
+      <h2>My Interests</h2>
+      <ul>
+        <li>Software Engineering</li>
+        <li>Web Development</li>
+        <li>Computer Graphics</li>
+        <li>Programming</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Featured Projects</h2>
+      <h3>Computer Graphics Project</h3>
+      <p>
+        A programming project exploring graphics,
+        shapes, and rendering techniques.
+      </p>
+      <a href="https://github.com/TangjianShi0426">
+        View my GitHub projects
+      </a>
+    </section>
+
+    <section>
+      <h2>Get in Touch</h2>
+      <p>
+        Interested in learning more about my work?
+        Visit my contact page.
+      </p>
+    </section>
+
+    <section>
+      <h2>Random Facts Web Component</h2>
+      <p>
+        In Homework 5, I developed an interactive
+        Web Component that displays facts and connects
+        to a public API using JavaScript fetch().
+      </p>
+      <p>
+        The component supports DOM updates,
+        error handling, theme switching,
+        and a saved compact mode preference.
+      </p>
+    </section>
+  </main>
+
+  {% include "footer.njk" %}
+</body>
+</html>
