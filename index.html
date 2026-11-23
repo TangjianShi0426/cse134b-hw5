@@ -126,69 +126,93 @@
 
 <script src="random-facts.js" defer></script>
 
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const widget = document.querySelector("#facts-widget");
-    const previousButton = document.querySelector("#previous-fact");
-    const nextButton = document.querySelector("#next-fact");
-    const liveButton = document.querySelector("#live-fact");
+document.addEventListener("DOMContentLoaded", () => {
+  const widget = document.querySelector("#facts-widget");
+  const previousButton = document.querySelector("#previous-fact");
+  const nextButton = document.querySelector("#next-fact");
+  const liveButton = document.querySelector("#live-fact");
+  const compactButton = document.querySelector("#compact-toggle");
 
-const compactButton = document.querySelector("#compact-toggle");
+  if (!widget || !previousButton || !nextButton ||
+      !liveButton || !compactButton) {
+    console.warn("Random Facts controls are missing.");
+    return;
+  }
 
-const storageKey = "hw5-compact-mode";
+  const storageKey = "hw5-compact-mode";
+  const factCount = widget.facts.length;
 
-let compactMode = false;
-
-try {
-  compactMode = localStorage.getItem(storageKey) === "true";
-} catch (error) {
-  console.warn("LocalStorage unavailable:", error);
-}
-
-function updateCompactMode() {
-  widget.toggleAttribute("compact", compactMode);
-
-  compactButton.textContent = compactMode
-    ? "Disable Compact Mode"
-    : "Enable Compact Mode";
-
-  compactButton.setAttribute(
-    "aria-pressed",
-    String(compactMode)
-  );
-}
-
-updateCompactMode();
-
-compactButton.addEventListener("click", () => {
-  compactMode = !compactMode;
-  updateCompactMode();
+  // Default to expanded mode if storage cannot be read.
+  let compactMode = false;
 
   try {
-    localStorage.setItem(storageKey, String(compactMode));
+    const savedValue = window.localStorage.getItem(storageKey);
+
+    if (savedValue === "true") {
+      compactMode = true;
+    } else if (savedValue === "false") {
+      compactMode = false;
+    }
   } catch (error) {
-    console.warn("Could not save preference:", error);
+    console.warn("LocalStorage read unavailable:", error);
+    compactMode = false;
   }
-});
 
+  function updateCompactMode() {
+    widget.toggleAttribute("compact", compactMode);
 
-liveButton.addEventListener("click", () => {
-  widget.loadLiveFact();
-});
+    compactButton.textContent = compactMode
+      ? "Disable Compact Mode"
+      : "Enable Compact Mode";
 
-    previousButton.addEventListener("click", () => {
-      const current = Number(widget.getAttribute("fact-index"));
-      const next = (current - 1 + 5) % 5;
-      widget.setAttribute("fact-index", next);
-    });
+    compactButton.setAttribute(
+      "aria-pressed",
+      String(compactMode)
+    );
+  }
 
-    nextButton.addEventListener("click", () => {
-      const current = Number(widget.getAttribute("fact-index"));
-      const next = (current + 1) % 5;
-      widget.setAttribute("fact-index", next);
-    });
+  // Restore the preference immediately.
+  updateCompactMode();
+
+  compactButton.addEventListener("click", () => {
+    compactMode = !compactMode;
+    updateCompactMode();
+
+    try {
+      window.localStorage.setItem(
+        storageKey,
+        String(compactMode)
+      );
+    } catch (error) {
+      // Preference still works for the current page.
+      console.warn("LocalStorage write unavailable:", error);
+    }
   });
+
+  // External controls change the observed attribute.
+  previousButton.addEventListener("click", () => {
+    const current = Number(widget.getAttribute("fact-index"));
+    const next = (current - 1 + factCount) % factCount;
+
+    widget.setAttribute("fact-index", String(next));
+  });
+
+  nextButton.addEventListener("click", () => {
+    const current = Number(widget.getAttribute("fact-index"));
+    const next = (current + 1) % factCount;
+
+    widget.setAttribute("fact-index", String(next));
+  });
+
+  // External live request control.
+  liveButton.addEventListener("click", () => {
+    widget.loadLiveFact();
+  });
+});
 </script>
+
 
 </body>
 </html>
